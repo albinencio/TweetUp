@@ -2,31 +2,49 @@
 //  TweetCell.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 6/18/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Alberto Nencioni on 02/27/18.
+//  Copyright © 2018 Alberto Nencioni. All rights reserved.
 //
 
 import UIKit
+import AlamofireImage
+import TTTAttributedLabel
 
 class TweetCell: UITableViewCell {
-    
-    @IBOutlet weak var tweetTextLabel: UILabel!
-    
-    var tweet: Tweet! {
-        didSet {
-            tweetTextLabel.text = tweet.text
-        }
+  
+  @IBOutlet weak var profileImageView: UIImageView!
+  @IBOutlet weak var nameLabel: TTTAttributedLabel!
+  @IBOutlet weak var screenNameLabel: TTTAttributedLabel!
+  @IBOutlet weak var createdAtLabel: UILabel!
+  @IBOutlet weak var tweetTextLabel: TTTAttributedLabel!
+  @IBOutlet weak var retweetCountLabel: UILabel!
+  @IBOutlet weak var favoriteCountLabel: UILabel!
+  @IBOutlet weak var repliesCountLabel: UILabel!
+  
+  var tweet: Tweet! {
+    didSet {
+      nameLabel.text = tweet.user?.name
+      let screenName = (tweet.user?.screenName)!
+      screenNameLabel.text = "@\(screenName)"
+      createdAtLabel.text = tweet.createdAtString
+      tweetTextLabel.text = tweet.text
+      let retweetCount = tweet.retweetCount!
+      let favoriteCount = tweet.favoriteCount!
+      retweetCountLabel.text = String(retweetCount)
+      favoriteCountLabel.text = String(favoriteCount)
+      profileImageView.af_setImage(withURL: URL(string: (tweet.user?.profileImgURL)!)!)
     }
+  }
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    // Initialization code
+  }
+  
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    
+    // Configure the view for the selected state
+  }
+  
 }

@@ -2,8 +2,8 @@
 //  APIManager.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 4/4/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Alberto Nencioni on 02/27/18.
+//  Copyright © 2018 Alberto Nencioni. All rights reserved.
 //
 
 import Foundation
@@ -38,10 +38,8 @@ class APIManager: SessionManager {
         if let error = error {
           failure(error)
         } else if let user = user {
-          print("Welcome \(user.name)")
-          
-          // MARK: TODO: set User.current, so that it's persisted
-          
+          print("Welcome \(user.name ?? "Username was nil")")
+          User.current = user // Set user so it is persisted
           success()
         }
       })
@@ -53,8 +51,12 @@ class APIManager: SessionManager {
   func logout() {
     clearCredentials()
     
-    // TODO: Clear current user by setting it to nil
+    // Clear current user
+    User.current = nil
     
+    // MARK: TODO: Deauthorize OAuth tokens
+    
+    // Post logout notification
     NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
   }
   
@@ -77,9 +79,8 @@ class APIManager: SessionManager {
   }
   
   func getHomeTimeLine(completion: @escaping ([Tweet]?, Error?) -> ()) {
-    
     // This uses tweets from disk to avoid hitting rate limit. Comment out if you want fresh
-    // tweets,
+    // tweets
     if let data = UserDefaults.standard.object(forKey: "hometimeline_tweets") as? Data {
       let tweetDictionaries = NSKeyedUnarchiver.unarchiveObject(with: data) as! [[String: Any]]
       let tweets = tweetDictionaries.flatMap({ (dictionary) -> Tweet in
@@ -133,7 +134,7 @@ class APIManager: SessionManager {
   //--------------------------------------------------------------------------------//
   
   
-  //MARK: OAuth
+  // MARK: OAuth
   static var shared: APIManager = APIManager()
   
   var oauthManager: OAuth1Swift!
