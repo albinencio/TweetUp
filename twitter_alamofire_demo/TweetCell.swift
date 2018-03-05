@@ -8,15 +8,14 @@
 
 import UIKit
 import AlamofireImage
-import TTTAttributedLabel
 
 class TweetCell: UITableViewCell {
   
   @IBOutlet weak var profileImageView: UIImageView!
-  @IBOutlet weak var nameLabel: TTTAttributedLabel!
-  @IBOutlet weak var screenNameLabel: TTTAttributedLabel!
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var screenNameLabel: UILabel!
   @IBOutlet weak var createdAtLabel: UILabel!
-  @IBOutlet weak var tweetTextLabel: TTTAttributedLabel!
+  @IBOutlet weak var tweetTextLabel: UILabel!
   @IBOutlet weak var retweetCountLabel: UILabel!
   @IBOutlet weak var favoriteCountLabel: UILabel!
   @IBOutlet weak var repliesCountLabel: UILabel!
