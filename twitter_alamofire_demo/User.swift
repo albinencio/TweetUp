@@ -45,7 +45,7 @@ class User {
   init(dictionary: [String: Any]) {
     name = dictionary["name"] as? String
     screenName = dictionary["screen_name"] as? String
-    profileImgURL = dictionary["profile_image_url_https"] as? String
+    profileImgURL = dictionary["profile_image_url"] as? String
     self.dictionary = dictionary
   }
 }
