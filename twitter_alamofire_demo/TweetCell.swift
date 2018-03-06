@@ -9,6 +9,10 @@
 import UIKit
 import AlamofireImage
 
+protocol TweetCellUpdater: class {
+  func updateTableView()
+}
+
 class TweetCell: UITableViewCell {
   
   // Profile image
@@ -33,6 +37,7 @@ class TweetCell: UITableViewCell {
   let favorite_def: UIImage = #imageLiteral(resourceName: "favor-icon")
   let favorite_sel: UIImage = #imageLiteral(resourceName: "favor-icon-red")
   
+  weak var delegate: TweetCellUpdater?
   var tweet: Tweet! {
     didSet {
       nameLabel.text = tweet.user?.name
@@ -50,26 +55,32 @@ class TweetCell: UITableViewCell {
     if (tweet.retweeted)! {
       tweet.retweeted = false
       tweet.retweetCount = tweet.retweetCount! - 1
-      self.retweetButton.imageView?.image = retweet_def
+      self.retweetButton.setImage(retweet_def, for: .normal)
     } else {
       tweet.retweeted = true
       tweet.retweetCount = tweet.retweetCount! + 1
-      self.retweetButton.imageView?.image = retweet_sel
+      self.retweetButton.setImage(retweet_sel, for: .normal)
     }
     self.retweetCountLabel.text = String(tweet.retweetCount!)
+    updateTableView()
   }
   
   @IBAction func didTapFavorite(_ sender: Any) {
     if (tweet.favorited!) {
       tweet.favorited = false
       tweet.favoriteCount = tweet.favoriteCount! - 1
-      self.favoriteButton.imageView?.image = favorite_def
+      self.favoriteButton.setImage(favorite_def, for: .normal)
     } else {
       tweet.favorited = true
       tweet.favoriteCount = tweet.favoriteCount! + 1
-      self.favoriteButton.imageView?.image = favorite_sel
+      self.favoriteButton.setImage(favorite_sel, for: .normal)
     }
     self.favoriteCountLabel.text = String(tweet.retweetCount!)
+    updateTableView()
+  }
+  
+  func updateTableView() {
+    delegate?.updateTableView()
   }
   
   override func awakeFromNib() {

@@ -14,7 +14,6 @@ import KeychainAccess
 
 class APIManager: SessionManager {
   
-  // MARK: TODO: Add App Keys
   static let consumerKey = "2TXE8YR1kG1BR8DkZKEntvrse"
   static let consumerSecret = "CODyTHA52qsV6rYKT9vXDFc4uXTkRIyqT9sQC1yk6q1yQyXpXh"
   
@@ -53,8 +52,6 @@ class APIManager: SessionManager {
     
     // Clear current user
     User.current = nil
-    
-    // MARK: TODO: Deauthorize OAuth tokens
     
     // Post logout notification
     NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)

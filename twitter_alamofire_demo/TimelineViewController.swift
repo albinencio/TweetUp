@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TweetCellUpdater {
   
   var tweets: [Tweet] = []
   
@@ -38,13 +38,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
   }
   
+  func updateTableView() {
+    tableView.reloadData()
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return tweets.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-    
+    cell.delegate = self
     cell.tweet = tweets[indexPath.row]
     
     return cell
