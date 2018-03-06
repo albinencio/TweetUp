@@ -71,13 +71,13 @@ open class OAuthSwiftCredential: NSObject, NSCoding {
     }
 
     // MARK: attributes
-    open internal(set) var consumerKey = ""
-    open internal(set) var consumerSecret = ""
-    open var oauthToken = ""
-    open var oauthRefreshToken = ""
-    open var oauthTokenSecret = ""
-    open var oauthTokenExpiresAt: Date?
-    open internal(set) var oauthVerifier = ""
+    @objc open internal(set) var consumerKey = ""
+    @objc open internal(set) var consumerSecret = ""
+    @objc open var oauthToken = ""
+    @objc open var oauthRefreshToken = ""
+    @objc open var oauthTokenSecret = ""
+    @objc open var oauthTokenExpiresAt: Date?
+    @objc open internal(set) var oauthVerifier = ""
     open var version: Version = .oauth1
 
     /// hook to replace headers creation
@@ -87,7 +87,7 @@ open class OAuthSwiftCredential: NSObject, NSCoding {
     override init() {
     }
 
-    public init(consumerKey: String, consumerSecret: String) {
+    @objc public init(consumerKey: String, consumerSecret: String) {
         self.consumerKey = consumerKey
         self.consumerSecret = consumerSecret
     }
@@ -154,7 +154,7 @@ open class OAuthSwiftCredential: NSObject, NSCoding {
         return self.authorizationHeader(method: method, url: url, parameters: parameters, body: body, timestamp: timestamp, nonce: nonce)
     }
 
-    open class func generateNonce() -> String {
+    @objc open class func generateNonce() -> String {
         let uuidString = UUID().uuidString
         return uuidString.substring(to: 8)
     }
@@ -199,7 +199,7 @@ open class OAuthSwiftCredential: NSObject, NSCoding {
         return authorizationParameters
     }
 
-    open func authorizationParameters(_ body: Data?, timestamp: String, nonce: String) -> OAuthSwift.Parameters {
+    @objc open func authorizationParameters(_ body: Data?, timestamp: String, nonce: String) -> OAuthSwift.Parameters {
         var authorizationParameters = OAuthSwift.Parameters()
         authorizationParameters["oauth_version"] = self.version.shortVersion
         authorizationParameters["oauth_signature_method"] =  self.version.signatureMethod.rawValue
@@ -244,7 +244,7 @@ open class OAuthSwiftCredential: NSObject, NSCoding {
         return sha1.base64EncodedString(options: [])
     }
 
-    open func isTokenExpired() -> Bool {
+    @objc open func isTokenExpired() -> Bool {
         if let expiresDate = oauthTokenExpiresAt {
             return expiresDate <= Date()
         }

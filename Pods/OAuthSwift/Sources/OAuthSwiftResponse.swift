@@ -12,13 +12,13 @@ import Foundation
 @objc
 public class OAuthSwiftResponse: NSObject { // not a struct for objc
     /// The data returned by the server.
-    public var data: Data
+    @objc public var data: Data
     /// The server's response to the URL request.
-    public var response: HTTPURLResponse
+    @objc public var response: HTTPURLResponse
     /// The URL request sent to the server.
-    public var request: URLRequest?
+    @objc public var request: URLRequest?
 
-    public init(data: Data, response: HTTPURLResponse, request: URLRequest?) {
+    @objc public init(data: Data, response: HTTPURLResponse, request: URLRequest?) {
         self.data = data
         self.response = response
         self.request = request
@@ -34,17 +34,17 @@ extension OAuthSwiftResponse {
     }
 
     /// `data` converted to string using data encoding
-    public var string: String? {
+    @objc public var string: String? {
         return dataString()
     }
 
     /// Convert to json object using JSONSerialization
-    public func jsonObject(options opt: JSONSerialization.ReadingOptions = []) throws -> Any {
+    @objc public func jsonObject(options opt: JSONSerialization.ReadingOptions = []) throws -> Any {
         return try JSONSerialization.jsonObject(with: self.data, options: opt)
     }
 
     /// Convert to object using PropertyListSerialization
-    public func propertyList(options opt: PropertyListSerialization.ReadOptions = [], format: UnsafeMutablePointer<PropertyListSerialization.PropertyListFormat>? = nil) throws -> Any {
+    @objc public func propertyList(options opt: PropertyListSerialization.ReadOptions = [], format: UnsafeMutablePointer<PropertyListSerialization.PropertyListFormat>? = nil) throws -> Any {
         return try PropertyListSerialization.propertyList(from: self.data, options: opt, format: format)
     }
 }

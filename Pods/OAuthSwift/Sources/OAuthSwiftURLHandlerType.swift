@@ -47,28 +47,28 @@ import SafariServices
 
         public typealias UITransion = (_ controller: SFSafariViewController, _ handler: SafariURLHandler) -> Void
 
-        open let oauthSwift: OAuthSwift
-        open var present: UITransion
-        open var dismiss: UITransion
+        @objc open let oauthSwift: OAuthSwift
+        @objc open var present: UITransion
+        @objc open var dismiss: UITransion
         /// retains observers
-        var observers = [String: NSObjectProtocol]()
+        @objc var observers = [String: NSObjectProtocol]()
 
-        open var factory: (_ URL: URL) -> SFSafariViewController = {URL in
+        @objc open var factory: (_ URL: URL) -> SFSafariViewController = {URL in
             return SFSafariViewController(url: URL)
         }
 
         /// delegates
-        open weak var delegate: SFSafariViewControllerDelegate?
+        @objc open weak var delegate: SFSafariViewControllerDelegate?
 
         // configure default presentation and dismissal code
 
-        open var animated: Bool = true
-        open var presentCompletion: (() -> Void)?
-        open var dismissCompletion: (() -> Void)?
+        @objc open var animated: Bool = true
+        @objc open var presentCompletion: (() -> Void)?
+        @objc open var dismissCompletion: (() -> Void)?
         open var delay: UInt32? = 1
 
         /// init
-        public init(viewController: UIViewController, oauthSwift: OAuthSwift) {
+        @objc public init(viewController: UIViewController, oauthSwift: OAuthSwift) {
             self.oauthSwift = oauthSwift
             self.present = { [weak viewController] controller, handler in
                 viewController?.present(controller, animated: handler.animated, completion: handler.presentCompletion)
@@ -78,7 +78,7 @@ import SafariServices
             }
         }
 
-        public init(present: @escaping UITransion, dismiss: @escaping UITransion, oauthSwift: OAuthSwift) {
+        @objc public init(present: @escaping UITransion, dismiss: @escaping UITransion, oauthSwift: OAuthSwift) {
             self.oauthSwift = oauthSwift
             self.present = present
             self.dismiss = dismiss
@@ -121,12 +121,12 @@ import SafariServices
         }
 
         /// Clear internal observers on authentification flow
-        open func clearObservers() {
+        @objc open func clearObservers() {
             clearLocalObservers()
             self.oauthSwift.removeCallbackNotificationObserver()
         }
 
-        open func clearLocalObservers() {
+        @objc open func clearLocalObservers() {
             for (_, observer) in observers {
                 OAuthSwift.notificationCenter.removeObserver(observer)
             }

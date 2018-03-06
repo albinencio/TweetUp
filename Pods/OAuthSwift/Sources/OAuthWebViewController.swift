@@ -45,12 +45,12 @@ open class OAuthWebViewController: OAuthViewController, OAuthSwiftURLHandlerType
 
     #if os(iOS) || os(tvOS)
     /// If controller have an navigation controller, application top view controller could be used if true
-    public var useTopViewControlerInsteadOfNavigation = false
+    @objc public var useTopViewControlerInsteadOfNavigation = false
 
     /// If you want you could set animation transition to NO
-    public var presentViewControllerAnimated = true
+    @objc public var presentViewControllerAnimated = true
 
-    public var topViewController: UIViewController? {
+    @objc public var topViewController: UIViewController? {
         #if !OAUTH_APP_EXTENSIONS
             return UIApplication.topViewController
         #else
@@ -81,7 +81,7 @@ open class OAuthWebViewController: OAuthViewController, OAuthSwiftURLHandlerType
     public static var userActivityType: String = "org.github.dongri.oauthswift.connect"
     #endif
 
-    open func doHandle(_ url: URL) {
+    @objc open func doHandle(_ url: URL) {
         #if os(iOS) || os(tvOS)
             let completion: () -> Void = { [unowned self] in
                 self.delegate?.oauthWebViewControllerDidPresent()
@@ -134,7 +134,7 @@ open class OAuthWebViewController: OAuthViewController, OAuthSwiftURLHandlerType
         #endif
     }
 
-    open func dismissWebViewController() {
+    @objc open func dismissWebViewController() {
         #if os(iOS) || os(tvOS)
             let completion: () -> Void = { [unowned self] in
                 self.delegate?.oauthWebViewControllerDidDismiss()

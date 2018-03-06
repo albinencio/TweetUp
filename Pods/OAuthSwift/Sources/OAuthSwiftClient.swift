@@ -16,18 +16,18 @@ public var OAuthSwiftDataEncoding: String.Encoding = .utf8
 
 open class OAuthSwiftClient: NSObject {
 
-    fileprivate(set) open var credential: OAuthSwiftCredential
-    open var paramsLocation: OAuthSwiftHTTPRequest.ParamsLocation = .authorizationHeader
+    @objc fileprivate(set) open var credential: OAuthSwiftCredential
+    @objc open var paramsLocation: OAuthSwiftHTTPRequest.ParamsLocation = .authorizationHeader
     /// Contains default URL session configuration
     open var sessionFactory = URLSessionFactory()
 
-    static let separator: String = "\r\n"
-    static var separatorData: Data = {
+    @objc static let separator: String = "\r\n"
+    @objc static var separatorData: Data = {
         return OAuthSwiftClient.separator.data(using: OAuthSwiftDataEncoding)!
     }()
 
     // MARK: init
-    public init(credential: OAuthSwiftCredential) {
+    @objc public init(credential: OAuthSwiftCredential) {
         self.credential = credential
     }
 
@@ -89,7 +89,7 @@ open class OAuthSwiftClient: NSObject {
         return nil
     }
 
-    open func makeRequest(_ request: URLRequest) -> OAuthSwiftHTTPRequest {
+    @objc open func makeRequest(_ request: URLRequest) -> OAuthSwiftHTTPRequest {
         let request = OAuthSwiftHTTPRequest(request: request, paramsLocation: self.paramsLocation, sessionFactory: self.sessionFactory)
         request.config.updateRequest(credential: self.credential)
         return request
@@ -132,7 +132,7 @@ open class OAuthSwiftClient: NSObject {
         return nil
     }
 
-    open func multiPartBody(from inputParameters: OAuthSwift.Parameters, boundary: String) -> Data {
+    @objc open func multiPartBody(from inputParameters: OAuthSwift.Parameters, boundary: String) -> Data {
         var parameters = OAuthSwift.Parameters()
         var multiparts = [OAuthSwiftMultipartData]()
 

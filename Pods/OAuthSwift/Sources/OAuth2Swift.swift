@@ -12,38 +12,38 @@ open class OAuth2Swift: OAuthSwift {
 
     /// If your oauth provider need to use basic authentification
     /// set value to true (default: false)
-    open var accessTokenBasicAuthentification = false
+    @objc open var accessTokenBasicAuthentification = false
 
     /// Set to true to deactivate state check. Be careful of CSRF
-    open var allowMissingStateCheck: Bool = false
+    @objc open var allowMissingStateCheck: Bool = false
 
     /// Encode callback url, some services require it to be encoded.
-    open var encodeCallbackURL: Bool = false
+    @objc open var encodeCallbackURL: Bool = false
 
     /// Encode callback url inside the query, this is second encoding phase when the entire query string gets assembled. In rare 
     /// cases, like with Imgur, the url needs to be encoded only once and this value needs to be set to `false`.
-    open var encodeCallbackURLQuery: Bool = true
+    @objc open var encodeCallbackURLQuery: Bool = true
 
-    var consumerKey: String
-    var consumerSecret: String
-    var authorizeUrl: String
-    var accessTokenUrl: String?
-    var responseType: String
-    var contentType: String?
+    @objc var consumerKey: String
+    @objc var consumerSecret: String
+    @objc var authorizeUrl: String
+    @objc var accessTokenUrl: String?
+    @objc var responseType: String
+    @objc var contentType: String?
 
     // MARK: init
-    public convenience init(consumerKey: String, consumerSecret: String, authorizeUrl: String, accessTokenUrl: String, responseType: String) {
+    @objc public convenience init(consumerKey: String, consumerSecret: String, authorizeUrl: String, accessTokenUrl: String, responseType: String) {
         self.init(consumerKey: consumerKey, consumerSecret: consumerSecret, authorizeUrl: authorizeUrl, responseType: responseType)
         self.accessTokenUrl = accessTokenUrl
     }
 
-    public convenience init(consumerKey: String, consumerSecret: String, authorizeUrl: String, accessTokenUrl: String, responseType: String, contentType: String) {
+    @objc public convenience init(consumerKey: String, consumerSecret: String, authorizeUrl: String, accessTokenUrl: String, responseType: String, contentType: String) {
         self.init(consumerKey: consumerKey, consumerSecret: consumerSecret, authorizeUrl: authorizeUrl, responseType: responseType)
         self.accessTokenUrl = accessTokenUrl
         self.contentType = contentType
     }
 
-    public init(consumerKey: String, consumerSecret: String, authorizeUrl: String, responseType: String) {
+    @objc public init(consumerKey: String, consumerSecret: String, authorizeUrl: String, responseType: String) {
         self.consumerKey = consumerKey
         self.consumerSecret = consumerSecret
         self.authorizeUrl = authorizeUrl
@@ -52,7 +52,7 @@ open class OAuth2Swift: OAuthSwift {
         self.client.credential.version = .oauth2
     }
 
-    public convenience init?(parameters: ConfigParameters) {
+    @objc public convenience init?(parameters: ConfigParameters) {
         guard let consumerKey = parameters["consumerKey"], let consumerSecret = parameters["consumerSecret"],
               let responseType = parameters["responseType"], let authorizeUrl = parameters["authorizeUrl"] else {
             return nil
@@ -66,7 +66,7 @@ open class OAuth2Swift: OAuthSwift {
         }
     }
 
-    open var parameters: ConfigParameters {
+    @objc open var parameters: ConfigParameters {
         return [
             "consumerKey": consumerKey,
             "consumerSecret": consumerSecret,

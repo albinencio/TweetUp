@@ -12,19 +12,19 @@ open class OAuth1Swift: OAuthSwift {
 
     /// If your oauth provider doesn't provide `oauth_verifier`
     /// set this value to true (default: false)
-    open var allowMissingOAuthVerifier: Bool = false
+    @objc open var allowMissingOAuthVerifier: Bool = false
 
     /// Optionally add callback URL to authorize Url (default: false)
-    open var addCallbackURLToAuthorizeURL: Bool = false
+    @objc open var addCallbackURLToAuthorizeURL: Bool = false
 
-    var consumerKey: String
-    var consumerSecret: String
-    var requestTokenUrl: String
-    var authorizeUrl: String
-    var accessTokenUrl: String
+    @objc var consumerKey: String
+    @objc var consumerSecret: String
+    @objc var requestTokenUrl: String
+    @objc var authorizeUrl: String
+    @objc var accessTokenUrl: String
 
     // MARK: init
-    public init(consumerKey: String, consumerSecret: String, requestTokenUrl: String, authorizeUrl: String, accessTokenUrl: String) {
+    @objc public init(consumerKey: String, consumerSecret: String, requestTokenUrl: String, authorizeUrl: String, accessTokenUrl: String) {
         self.consumerKey = consumerKey
         self.consumerSecret = consumerSecret
         self.requestTokenUrl = requestTokenUrl
@@ -38,7 +38,7 @@ open class OAuth1Swift: OAuthSwift {
         self.init(consumerKey: consumerKey, consumerSecret: consumerSecret, requestTokenUrl: "", authorizeUrl: "", accessTokenUrl: "")
     }
 
-    public convenience init?(parameters: ConfigParameters) {
+    @objc public convenience init?(parameters: ConfigParameters) {
         guard let consumerKey = parameters["consumerKey"], let consumerSecret = parameters["consumerSecret"],
             let requestTokenUrl = parameters["requestTokenUrl"], let authorizeUrl = parameters["authorizeUrl"], let accessTokenUrl = parameters["accessTokenUrl"] else {
             return nil
@@ -49,7 +49,7 @@ open class OAuth1Swift: OAuthSwift {
           accessTokenUrl: accessTokenUrl)
     }
 
-    open var parameters: ConfigParameters {
+    @objc open var parameters: ConfigParameters {
         return [
             "consumerKey": consumerKey,
             "consumerSecret": consumerSecret,
