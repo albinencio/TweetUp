@@ -56,10 +56,24 @@ class TweetCell: UITableViewCell {
       tweet.retweeted = false
       tweet.retweetCount = tweet.retweetCount! - 1
       self.retweetButton.setImage(retweet_def, for: .normal)
+      APIManager.shared.un_retweet(tweet, completion: { (tweet, error) in
+        if let error = error {
+          print("Error unretweeting tweet: \(error.localizedDescription)")
+        } else if let tweet = tweet {
+          print("Successfully unretweeted the following Tweet: \n\((tweet.text)!)")
+        }
+      })
     } else {
       tweet.retweeted = true
       tweet.retweetCount = tweet.retweetCount! + 1
       self.retweetButton.setImage(retweet_sel, for: .normal)
+      APIManager.shared.retweet(tweet, completion: { (tweet, error) in
+        if let error = error {
+          print("Error retweeting tweet: \(error.localizedDescription)")
+        } else if let tweet = tweet {
+          print("Successfully retweeted the following Tweet: \n\((tweet.text)!)")
+        }
+      })
     }
     self.retweetCountLabel.text = String(tweet.retweetCount!)
     updateTableView()
@@ -70,10 +84,24 @@ class TweetCell: UITableViewCell {
       tweet.favorited = false
       tweet.favoriteCount = tweet.favoriteCount! - 1
       self.favoriteButton.setImage(favorite_def, for: .normal)
+      APIManager.shared.un_favorite(tweet, completion: { (tweet, error) in
+        if let error = error {
+          print("Error unfavoriting tweet: \(error.localizedDescription)")
+        } else if let tweet = tweet {
+          print("Successfully unfavorited the following Tweet: \n\((tweet.text)!)")
+        }
+      })
     } else {
       tweet.favorited = true
       tweet.favoriteCount = tweet.favoriteCount! + 1
       self.favoriteButton.setImage(favorite_sel, for: .normal)
+      APIManager.shared.favorite(tweet, completion: { (tweet, error) in
+        if let error = error {
+          print("Error favoriting tweet: \(error.localizedDescription)")
+        } else if let tweet = tweet {
+          print("Successfully favorited the following Tweet: \n\((tweet.text)!)")
+        }
+      })
     }
     self.favoriteCountLabel.text = String(tweet.retweetCount!)
     updateTableView()
