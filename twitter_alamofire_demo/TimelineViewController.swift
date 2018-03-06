@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TweetCellUpdater {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellUpdater {
   
   var tweets: [Tweet] = []
   
@@ -56,6 +56,22 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+  
+  var isMoreDataLoading = false
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if (!isMoreDataLoading) {
+      // Calculate the position of one screen length before the bottom of the results
+      let scrollViewContentHeight = tableView.contentSize.height
+      let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+      
+      // When the user has scrolled past the threshold, start requesting
+      if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+        isMoreDataLoading = true
+        // MARK: TODO: Reload more tweets for infinite scrolling
+      }
+    }
   }
   
   override func didReceiveMemoryWarning() {

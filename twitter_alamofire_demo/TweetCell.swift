@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import ActiveLabel
 
 protocol TweetCellUpdater: class {
   func updateTableView()
@@ -16,7 +17,11 @@ protocol TweetCellUpdater: class {
 class TweetCell: UITableViewCell {
   
   // Profile image
-  @IBOutlet weak var profileImageView: UIImageView!
+  @IBOutlet weak var profileImageView: UIImageView! {
+    didSet {
+      profileImageView.layer.cornerRadius = 3.0
+    }
+  }
   
   // Buttons
   @IBOutlet weak var retweetButton: UIButton!
@@ -26,7 +31,7 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var screenNameLabel: UILabel!
   @IBOutlet weak var createdAtLabel: UILabel!
-  @IBOutlet weak var tweetTextLabel: UILabel!
+  @IBOutlet weak var tweetTextLabel: ActiveLabel!
   @IBOutlet weak var retweetCountLabel: UILabel!
   @IBOutlet weak var favoriteCountLabel: UILabel!
   @IBOutlet weak var repliesCountLabel: UILabel!
@@ -44,6 +49,8 @@ class TweetCell: UITableViewCell {
       let screenName = (tweet.user?.screenName)!
       screenNameLabel.text = "@\(screenName)"
       createdAtLabel.text = tweet.createdAtString
+      tweetTextLabel.numberOfLines = 0
+      tweetTextLabel.enabledTypes = [.mention, .hashtag, .url]
       tweetTextLabel.text = tweet.text
       retweetCountLabel.text = String(tweet.retweetCount!)
       favoriteCountLabel.text = String(tweet.favoriteCount!)
