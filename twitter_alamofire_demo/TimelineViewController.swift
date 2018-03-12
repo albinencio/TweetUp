@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellUpdater {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellUpdater, ComposeViewControllerDelegate {
   
   var tweets: [Tweet] = []
   
@@ -40,6 +40,19 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   func updateTableView() {
     tableView.reloadData()
+  }
+  
+  func did(post: Tweet) {
+    // Reload data
+    APIManager.shared.getHomeTimeLine { (tweets, error) in
+      if let tweets = tweets {
+        self.tweets = tweets
+        self.tableView.reloadData()
+      } else if let error = error {
+        print("Error getting home timeline: " + error.localizedDescription)
+      }
+    }
+    dismiss(animated: true, completion: nil)
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,7 +92,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     // Dispose of any resources that can be recreated.
   }
   
-  
   @IBAction func didTapLogout(_ sender: Any) {
     APIManager.shared.logout()
   }
@@ -94,6 +106,21 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       }
     }
     refreshControl.endRefreshing()
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "composeSegue" {
+      let destination = segue.destination as! ComposeViewController
+      destination.delegate = self
+    } else if segue.identifier == "detailSegue" {
+      let destination = segue.destination as! DetailViewController
+      let cell = sender as! TweetCell
+      
+      if let indexPath = tableView.indexPath(for: cell) {
+        let tweet = tweets[indexPath.row]
+        destination.tweet = tweet
+      }
+    }
   }
   
 }

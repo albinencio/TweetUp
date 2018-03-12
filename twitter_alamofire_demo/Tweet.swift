@@ -17,6 +17,7 @@ class Tweet {
   var favorited: Bool? // Configure favorite button
   var retweetCount: Int? // Update favorite count label
   var retweeted: Bool? // Configure retweet button
+  var replyCount: Int? // Update favorite count label
   var user: User? // Author of the Tweet
   var createdAtString: String? // String representation of date posted
   
@@ -38,10 +39,11 @@ class Tweet {
     
     id = (dictionary["id"] as! Int)
     text = (dictionary["text"] as! String)
-    favoriteCount = dictionary["favorite_count"] as? Int
-    favorited = dictionary["favorited"] as? Bool
-    retweetCount = (dictionary["retweet_count"] as! Int)
+    favoriteCount = (dictionary["favorite_count"] as? Int)
+    favorited = (dictionary["favorited"] as? Bool)
+    retweetCount = (dictionary["retweet_count"] as? Int)
     retweeted = (dictionary["retweeted"] as! Bool)
+    replyCount = (dictionary["reply_count"] as? Int)
     
     let user = dictionary["user"] as! [String: Any]
     self.user = User(dictionary: user)

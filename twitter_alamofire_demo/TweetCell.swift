@@ -43,6 +43,7 @@ class TweetCell: UITableViewCell {
   let favorite_sel: UIImage = #imageLiteral(resourceName: "favor-icon-red")
   
   weak var delegate: TweetCellUpdater?
+  
   var tweet: Tweet! {
     didSet {
       nameLabel.text = tweet.user?.name
@@ -54,6 +55,7 @@ class TweetCell: UITableViewCell {
       tweetTextLabel.text = tweet.text
       retweetCountLabel.text = String(tweet.retweetCount!)
       favoriteCountLabel.text = String(tweet.favoriteCount!)
+      
       profileImageView.af_setImage(withURL: URL(string: (tweet.user?.profileImgURL)!)!)
     }
   }
