@@ -110,7 +110,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://i.imgur.com/tuCmOi1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [LiceCap](http://www.cockos.com/licecap/). Simulator run on iPhone 8.
 
 ## Notes
 
