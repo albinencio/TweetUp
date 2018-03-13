@@ -118,6 +118,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       
       if let indexPath = tableView.indexPath(for: cell) {
         let tweet = tweets[indexPath.row]
+        print(tweet.user?.name)
+        print(tweet.user?.screenName)
         destination.tweet = tweet
       }
     }

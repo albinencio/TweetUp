@@ -11,7 +11,7 @@ import ActiveLabel
 
 class DetailViewController: UIViewController {
   
-  var tweet: Tweet?
+  var tweet: Tweet!
   
   // Profile image
   @IBOutlet weak var profileImageView: UIImageView! {
@@ -42,7 +42,17 @@ class DetailViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Do any additional setup after loading the view.
+    nameLabel.text = tweet.user?.name
+    let screenName = (tweet.user?.screenName)!
+    screenNameLabel.text = "@\(screenName)"
+    createdAtLabel.text = tweet.createdAtString
+    tweetTextLabel.numberOfLines = 0
+    tweetTextLabel.enabledTypes = [.mention, .hashtag, .url]
+    tweetTextLabel.text = tweet.text
+    retweetCountLabel.text = String(tweet.retweetCount!)
+    favoriteCountLabel.text = String(tweet.favoriteCount!)
+    
+    profileImageView.af_setImage(withURL: URL(string: (tweet.user?.profileImgURL)!)!)
   }
   
   override func didReceiveMemoryWarning() {
